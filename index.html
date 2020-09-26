@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header text-center">
+          <h1>Weather Dashboard</h1>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                  <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title ">Search for a City:</h5>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cityName" placeholder="Enter a city">                            
+                            <button type="button" class="btn btn-outline-primary" id="searchButton">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="list-group mt-3">
+                            <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
+                            <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
+                            <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
+                            <button type="button" class="list-group-item list-group-item-action" disabled>Vestibulum at eros</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">City <img id="wiconHeader" src="" alt="Weather icon"></h4>
+                      <p class="card-text" id="temperature">Temperature:</p>
+                      <p class="card-text" id="humidity">Humidity:</p>
+                      <p class="card-text" id="windSpeed">Wind Speed:</p>
+                      <p class="card-text" id="uvIndex">UV Index:</p>
+                    </div>
+                  </div>
+                  <h4 class="mt-3">5-Day Forecast:</h4>
+                  <div class="card-deck">
+                    <div class="card bg-primary text-white">
+                      <div class="card-body">
+                        <h5 class="card-title date">Card title</h5>
+                        <div id="icon"><img class="wicon" src="" alt="Weather icon"></div>
+                        <p class="card-text temp">Temp:</p>
+                        <p class="card-text humidity">Humidity:</p>
+                      </div>
+                    </div>
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h5 class="card-title date">Card title</h5>
+                            <div id="icon"><img class="wicon" src="" alt="Weather icon"></div>
+                            <p class="card-text temp">Temp:</p>
+                            <p class="card-text humidity">Humidity:</p>
+                        </div>
+                    </div>
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h5 class="card-title date">Card title</h5>
+                            <div id="icon"><img class="wicon" src="" alt="Weather icon"></div>
+                            <p class="card-text temp">Temp:</p>
+                            <p class="card-text humidity">Humidity:</p>
+                        </div>
+                    </div>
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h5 class="card-title date">Card title</h5>
+                            <div id="icon"><img class="wicon" src="" alt="Weather icon"></div>
+                            <p class="card-text temp">Temp:</p>
+                            <p class="card-text humidity">Humidity:</p>
+                        </div>
+                    </div>
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h5 class="card-title date">Card title</h5>
+                            <div id="icon"><img class="wicon" src="" alt="Weather icon"></div>
+                            <p class="card-text temp">Temp:</p>
+                            <p class="card-text humidity">Humidity:</p>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="../Homework_6/assets/js/script.js"></script>
+</body>
+</html>
