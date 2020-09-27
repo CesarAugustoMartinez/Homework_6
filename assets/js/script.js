@@ -14,11 +14,6 @@ $(document).ready(function(){
     $("#listCities button").on("click", function(){
         console.log($(this).text());
         if (jQuery.inArray($(this).val(), cities) === -1){
-            //cities.push($("#cityName").val());
-            //localStorage.setItem("Cities",JSON.stringify(cities));  
-            //var newCity = $("<button type='button' class='list-group-item list-group-item-action'>");
-            //newCity.text($("#cityName").val());
-            //$("#listCities").append(newCity);
            apiCallOut($(this).text());
         }        
     });
@@ -43,7 +38,7 @@ function initStore() {
  
  initStore();
 
-function apiCallOut(city){
+function apiCallOut(city){ // All data is being pulled correctly and propagated to the html elements in the main page. 
         console.log(city);
         var temp;
         var humidity;
