@@ -11,6 +11,17 @@ $(document).ready(function(){
             apiCallOut($("#cityName").val());
         }        
     });
+    $("#listCities button").on("click", function(){
+        console.log($(this).text());
+        if (jQuery.inArray($(this).val(), cities) === -1){
+            //cities.push($("#cityName").val());
+            //localStorage.setItem("Cities",JSON.stringify(cities));  
+            //var newCity = $("<button type='button' class='list-group-item list-group-item-action'>");
+            //newCity.text($("#cityName").val());
+            //$("#listCities").append(newCity);
+           apiCallOut($(this).text());
+        }        
+    });
 
 
 });
