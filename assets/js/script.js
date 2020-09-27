@@ -32,7 +32,7 @@ function initStore() {
  
  initStore();
 
- function apiCallOut(city){
+function apiCallOut(city){
         console.log(city);
         var temp;
         var humidity;
@@ -59,8 +59,6 @@ function initStore() {
               var iconurl = "http://openweathermap.org/img/w/" + iconCode + ".png"; // Getting icon from the weather web page
               console.log(response);
               console.log(temp+" "+humidity+" "+windSpeed+" "+lon+" "+lat);
-              //$("#nameCity").text(response.name);
-              //$("#nameCity").append($("<img id='wiconHeader' src=${iconurl} alt='Weather icon'>"));
               var date = moment().format('dddd LL'); // Getting the current date using moment.js library
               $("#nameCity").html(`<h4 class="card-title" id="nameCity">${response.name}<img id='wiconHeader' src=${iconurl} alt='Weather icon'>${" " + date}</h4>`); 
               $("#temperature").text("Temperature: "+temp);
@@ -73,7 +71,23 @@ function initStore() {
               .then(function(responseUV) {
                 console.log(responseUV);
                 uvIndex = responseUV.value;
-                $("#uvIndex").text("UV Index: "+uvIndex);
+                $("#uvIndex").text(" "+uvIndex);
+                bgUvIndex(uvIndex);
               });    
-        });       
+    });
+
+};
+
+function bgUvIndex(uvIndex){
+    if (uvIndex >= 0 && uvIndex <3 ){
+        $("#uvIndex").css("background-color", "lightgreen");
+    } else if (uvIndex >= 3 && uvIndex < 6 ){
+        $("#uvIndex").css("background-color", "yellow");
+    } else if (uvIndex >= 6 && uvIndex < 8 ){
+        $("#uvIndex").css("background-color", "orange");
+    } else if (uvIndex >= 8 && uvIndex < 11 ){
+        $("#uvIndex").css("background-color", "red");
+    }else if (uvIndex >= 11){
+        $("#uvIndex").css("background-color", "violet");
+    }
 };
