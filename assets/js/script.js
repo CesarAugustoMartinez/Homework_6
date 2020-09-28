@@ -1,31 +1,35 @@
-var cities = []; // Creating an array to store all cities that the user searched 
+var cities = []; // Creating an array to store all cities that the user searched
 
 $(document).ready(function(){
     $("#searchButton").on("click", function(){  // Adding click event listen listener to all buttons
+        console.log(cities);
         if ($("#cityName").val() === ""){
             console.log($("#cityName").val());
             return;
-        }
-        if (jQuery.inArray($("#cityName").val(), cities) === -1){
-            cities.push($("#cityName").val());
-            localStorage.setItem("Cities",JSON.stringify(cities));  // Grabbing and storing the name city from the button
-            var newCity = $("<button type='button' class='list-group-item list-group-item-action'>"); 
-            newCity.text($("#cityName").val());
-            $("#listCities").append(newCity);
-            clearForecast();
-            apiCallOut($("#cityName").val());
         } else {
+            if (jQuery.inArray($("#cityName").val(), cities) === -1){
+                cities.push($("#cityName").val());
+                console.log(cities);
+                localStorage.setItem("Cities",JSON.stringify(cities));  // Grabbing and storing the name city from the button
+                var newCity = $("<button type='button' class='list-group-item list-group-item-action'>"); 
+                newCity.text($("#cityName").val());
+                $("#listCities").prepend(newCity);
+                clearForecast();
+                apiCallOut($("#cityName").val());
+            } else {
+                clearForecast();
+                apiCallOut($("#cityName").val()); 
+            }
+        }
+        $("#listCities").empty();
+        initStore();
+        $("#listCities button").on("click", function(){  // Event listener for button, for when the button is clicked
+            console.log($(this).text());
             clearForecast();
-            apiCallOut($("#cityName").val());
-        }       
-    });
-    $("#listCities button").on("click", function(){  // Event listener for button, for when the button is clicked
-        console.log($(this).text());
-        if (jQuery.inArray($(this).val(), cities) === -1){
-           clearForecast(); 
-           apiCallOut($(this).text());
-        }        
-    });
+            apiCallOut($(this).text());           
+        });            
+        });
+    
 });
 
 function initStore() { // Getting all data from the local store to initialize the list of cities 
@@ -42,7 +46,7 @@ function initStore() { // Getting all data from the local store to initialize th
         }
      }    
  }; 
- initStore();
+initStore();
 function apiCallOut(city){ // All data is being pulled correctly and propagated to the html elements in the main page. 
         console.log(city);
         var temp;
@@ -141,3 +145,9 @@ function bgUvIndex(uvIndex){ // To changes the background color of the Uv Index
 function clearForecast(){ // To clear the Forecast card 
     $(".card-deck").empty();
 };
+
+$("#listCities button").on("click", function(){  // Event listener for button, for when the button is clicked
+    console.log($(this).text());
+    clearForecast(); 
+    apiCallOut($(this).text());        
+});       
