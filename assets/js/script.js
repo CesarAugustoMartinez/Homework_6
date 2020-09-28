@@ -8,12 +8,14 @@ $(document).ready(function(){
             var newCity = $("<button type='button' class='list-group-item list-group-item-action'>");
             newCity.text($("#cityName").val());
             $("#listCities").append(newCity);
+            clearForecast();
             apiCallOut($("#cityName").val());
         }        
     });
     $("#listCities button").on("click", function(){
         console.log($(this).text());
         if (jQuery.inArray($(this).val(), cities) === -1){
+           clearForecast(); 
            apiCallOut($(this).text());
         }        
     });
@@ -67,9 +69,9 @@ function apiCallOut(city){ // All data is being pulled correctly and propagated 
               console.log(temp+" "+humidity+" "+windSpeed+" "+lon+" "+lat);
               var date = moment().format('dddd LL'); // Getting the current date using moment.js library
               $("#nameCity").html(`<h4 class="card-title" id="nameCity">${response.name}<img id='wiconHeader' src=${iconurl} alt='Weather icon'>${" " + date}</h4>`); 
-              $("#temperature").text("Temperature: "+temp);
-              $("#humidity").text("Humidity: "+humidity);
-              $("#windSpeed").text("Wind Speed: "+windSpeed);
+              $("#temperature").text("Temperature: "+parseInt(temp)+ " °F");
+              $("#humidity").text("Humidity: "+humidity+" %");
+              $("#windSpeed").text("Wind Speed: "+windSpeed + "mph");
               $.ajax({
                 url: "http://api.openweathermap.org/data/2.5/uvi?lat="+lat+"&lon="+lon+"&appid="+apiKey,
                 method: "GET"
@@ -79,7 +81,43 @@ function apiCallOut(city){ // All data is being pulled correctly and propagated 
                 uvIndex = responseUV.value;
                 $("#uvIndex").text(" "+uvIndex);
                 bgUvIndex(uvIndex);
-              });    
+              });
+              $.ajax({
+                url: "http://api.openweathermap.org/data/2.5/forecast?q="+city+"&appid="+apiKey,
+                method: "GET"
+              })
+              .then(function(responseForecast) {
+                var arrayForecast = responseForecast.list;
+                console.log(arrayForecast.length);
+                for (i=0; i < arrayForecast.length; i++){
+                    if (i === 3 || i === 11 || i === 19 || i === 27 || i === 35){
+                        console.log(i);
+                        var card = $("<div class='card bg-primary text-white'>");
+                        var cardBody = $("<div class='card-body'>");
+                        var cardTitle = $("<h5 class='card-title date'>Card title</h5>");
+                        var divIcon = $("<div id='icon'>");
+                        var img = $("<img id='wiconHeader' src='' alt='Weather icon'>")
+                        var pTemp = $("<p class='card-text temp'>");
+                        var pHumidity = $("<p class='card-text humidity'>");
+                        iconForescast = arrayForecast[i].weather[0].icon;
+                        var iconurlF = "http://openweathermap.org/img/w/" + iconForescast + ".png";
+                        cardTitle.text((arrayForecast[i].dt_txt).substr(0,10));
+                        img.attr("src",iconurlF);
+                        var tempForecast = parseInt((arrayForecast[i].main.temp - 273.15) * 9/5 + 32);
+                        pTemp.text("Temp: "+ tempForecast+ " °F");
+                        pHumidity.text("Humidity: "+arrayForecast[i].main.humidity + " %");
+                        card.append(cardBody);
+                        cardBody.append(cardTitle);
+                        cardBody.append(divIcon);
+                        divIcon.append(img);
+                        cardBody.append(pTemp);
+                        cardBody.append(pHumidity);
+                        $(".card-deck").append(card);
+                    }
+                }
+              });
+
+
     });
 
 };
@@ -97,3 +135,15 @@ function bgUvIndex(uvIndex){
         $("#uvIndex").css("background-color", "violet");
     }
 };
+function clearForecast(){
+    $(".card-deck").empty();
+
+
+};
+// function clearFields(){
+//     $(".cardArticle").each(function (){
+//           $(this).empty();
+//           $(".article-list").empty();
+//       });
+//       //location.reload();
+//   };
