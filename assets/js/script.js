@@ -35,6 +35,7 @@ $(document).ready(function(){
 function initStore() { // Getting all data from the local store to initialize the list of cities 
     // Parsing the JSON string to an object
      if (localStorage.getItem("Cities") !== null){
+         var lastcity;
         cities = JSON.parse(localStorage.getItem("Cities"));
         console.log(cities.length);
         console.log(cities);
@@ -43,10 +44,25 @@ function initStore() { // Getting all data from the local store to initialize th
             newCity.text(cities[i]);
             console.log(cities[i]);
             $("#listCities").append(newCity);
-        }
+        }        
      }    
  }; 
-initStore();
+
+
+if (localStorage.getItem("Cities") !== null){ // Getting all data from the local store to initialize the list of cities 
+    var lastcity;
+   cities = JSON.parse(localStorage.getItem("Cities"));
+   console.log(cities.length);
+   console.log(cities);
+   for (i=0; i < cities.length; i++){
+       var newCity = $("<button type='button' class='list-group-item list-group-item-action'>");
+       newCity.text(cities[i]);
+       console.log(cities[i]);
+       $("#listCities").append(newCity);
+   }           
+apiCallOut(cities[i-1]); //Loading data for the last searched city
+}    
+
 function apiCallOut(city){ // All data is being pulled correctly and propagated to the html elements in the main page. 
         console.log(city);
         var temp;
