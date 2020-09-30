@@ -2,9 +2,7 @@ var cities = []; // Creating an array to store all cities that the user searched
 
 $(document).ready(function(){
     $("#searchButton").on("click", function(){  // Adding click event listen listener to all buttons
-        console.log(cities);
         if ($("#cityName").val() === ""){
-            console.log($("#cityName").val());
             return;
         } else {
             var apiKey = "2f83f2e43f057df57403be35ef7a51f5";
@@ -17,7 +15,6 @@ $(document).ready(function(){
             .done(function(){ // To validate if the request is successful 
                 if (jQuery.inArray($("#cityName").val(), cities) === -1){
                     cities.push($("#cityName").val());
-                    console.log(cities);
                     localStorage.setItem("Cities",JSON.stringify(cities));  // Grabbing and storing the name city from the button
                     var newCity = $("<button type='button' class='list-group-item list-group-item-action'>"); 
                     newCity.text($("#cityName").val());
@@ -31,7 +28,6 @@ $(document).ready(function(){
                 $("#listCities").empty();
                 initStore();
                 $("#listCities button").on("click", function(){  // Event listener for button, for when the button is clicked
-                console.log($(this).text());
                 clearForecast();
                 apiCallOut($(this).text());           
                 });            
@@ -49,12 +45,9 @@ function initStore() { // Getting all data from the local store to initialize th
      if (localStorage.getItem("Cities") !== null){
          var lastcity;
         cities = JSON.parse(localStorage.getItem("Cities"));
-        console.log(cities.length);
-        console.log(cities);
         for (i=0; i < cities.length; i++){
             var newCity = $("<button type='button' class='list-group-item list-group-item-action'>");
             newCity.text(cities[i]);
-            console.log(cities[i]);
             $("#listCities").append(newCity);
         }        
      }    
@@ -64,12 +57,9 @@ function initStore() { // Getting all data from the local store to initialize th
 if (localStorage.getItem("Cities") !== null){ // Getting all data from the local store to initialize the list of cities 
     var lastcity;
    cities = JSON.parse(localStorage.getItem("Cities"));
-   console.log(cities.length);
-   console.log(cities);
    for (i=0; i < cities.length; i++){
        var newCity = $("<button type='button' class='list-group-item list-group-item-action'>");
        newCity.text(cities[i]);
-       console.log(cities[i]);
        $("#listCities").append(newCity);
    }           
 apiCallOut(cities[i-1]); //Loading data for the last searched city
@@ -100,8 +90,6 @@ function apiCallOut(city){ // All data is being pulled correctly and propagated 
               lat = response.coord.lat;
               iconCode = response.weather[0].icon;
               var iconurl = "http://openweathermap.org/img/w/" + iconCode + ".png"; // Constucting a url to get icon from the weather web page
-              console.log(response);
-              console.log(temp+" "+humidity+" "+windSpeed+" "+lon+" "+lat);
               var date = moment().format('dddd LL'); // Getting the current date using moment.js library
               $("#nameCity").html(`<h4 class="card-title" id="nameCity">${response.name}<img id='wiconHeader' src=${iconurl} alt='Weather icon'>${" " + date}</h4>`); 
               $("#temperature").text("Temperature: "+parseInt(temp)+ " °F");
@@ -112,7 +100,6 @@ function apiCallOut(city){ // All data is being pulled correctly and propagated 
                 method: "GET"
               })
               .then(function(responseUV) {
-                console.log(responseUV);
                 uvIndex = responseUV.value;
                 $("#uvIndex").text(" "+uvIndex);
                 bgUvIndex(uvIndex); // Calling a function to change the background color of the Uv Index
@@ -123,10 +110,8 @@ function apiCallOut(city){ // All data is being pulled correctly and propagated 
               })
               .then(function(responseForecast) {
                 var arrayForecast = responseForecast.list; // storing the data from the AJAX request in an array 
-                console.log(arrayForecast.length);
                 for (i=0; i < arrayForecast.length; i++){
                     if (i === 3 || i === 11 || i === 19 || i === 27 || i === 35){
-                        console.log(i);
                         // Creating and storing all element to create the forecast card
                         var card = $("<div class='card bg-primary text-white'>");
                         var cardBody = $("<div class='card-body'>");
@@ -175,7 +160,6 @@ function clearForecast(){ // To clear the Forecast card
 };
 
 $("#listCities button").on("click", function(){  // Event listener for button, for when the button is clicked
-    console.log($(this).text());
     clearForecast(); 
     apiCallOut($(this).text());        
 });       
