@@ -1,3 +1,4 @@
+// Script.js file with jQuery code to generate a dynamically HTML and CSS pages.
 var cities = []; // Creating an array to store all cities that the user searched
 
 $(document).ready(function(){
