@@ -107,6 +107,9 @@ This web application has a page index.html where the user can enter a name of a 
 
 ![picture](assets/images/forecast.png)
 
+- Alert if the city was not found
+
+![picture](assets/images/cityNotFound.png)
 
 [Back To The Top](#Weather-Dashboard)
 
