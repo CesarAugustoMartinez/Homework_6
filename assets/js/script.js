@@ -90,14 +90,14 @@ function apiCallOut(city){ // All data is being pulled correctly and propagated 
               lon = response.coord.lon;
               lat = response.coord.lat;
               iconCode = response.weather[0].icon;
-              var iconurl = "http://openweathermap.org/img/w/" + iconCode + ".png"; // Constucting a url to get icon from the weather web page
+              var iconurl = "https://openweathermap.org/img/w/" + iconCode + ".png"; // Constucting a url to get icon from the weather web page
               var date = moment().format('dddd LL'); // Getting the current date using moment.js library
               $("#nameCity").html(`<h4 class="card-title" id="nameCity">${response.name}<img id='wiconHeader' src=${iconurl} alt='Weather icon'>${" " + date}</h4>`); 
               $("#temperature").text("Temperature: "+parseInt(temp)+ " °F");
               $("#humidity").text("Humidity: "+humidity+" %");
               $("#windSpeed").text("Wind Speed: "+windSpeed + " mph");
               $.ajax({ // Performing an AJAX request with the queryURL
-                url: "http://api.openweathermap.org/data/2.5/uvi?lat="+lat+"&lon="+lon+"&appid="+apiKey,
+                url: "https://api.openweathermap.org/data/2.5/uvi?lat="+lat+"&lon="+lon+"&appid="+apiKey,
                 method: "GET"
               })
               .then(function(responseUV) {
@@ -106,7 +106,7 @@ function apiCallOut(city){ // All data is being pulled correctly and propagated 
                 bgUvIndex(uvIndex); // Calling a function to change the background color of the Uv Index
               });
               $.ajax({
-                url: "http://api.openweathermap.org/data/2.5/forecast?q="+city+"&appid="+apiKey,
+                url: "https://api.openweathermap.org/data/2.5/forecast?q="+city+"&appid="+apiKey,
                 method: "GET"
               })
               .then(function(responseForecast) {
@@ -123,7 +123,7 @@ function apiCallOut(city){ // All data is being pulled correctly and propagated 
                         var pHumidity = $("<p class='card-text humidity'>");
                         // Setting attributes of the elements to a property
                         iconForescast = arrayForecast[i].weather[0].icon;
-                        var iconurlF = "http://openweathermap.org/img/w/" + iconForescast + ".png";
+                        var iconurlF = "https://openweathermap.org/img/w/" + iconForescast + ".png";
                         cardTitle.text((arrayForecast[i].dt_txt).substr(0,10));
                         img.attr("src",iconurlF);
                         var tempForecast = parseInt((arrayForecast[i].main.temp - 273.15) * 9/5 + 32);
