@@ -7,29 +7,41 @@ $(document).ready(function(){
             console.log($("#cityName").val());
             return;
         } else {
-            if (jQuery.inArray($("#cityName").val(), cities) === -1){
-                cities.push($("#cityName").val());
-                console.log(cities);
-                localStorage.setItem("Cities",JSON.stringify(cities));  // Grabbing and storing the name city from the button
-                var newCity = $("<button type='button' class='list-group-item list-group-item-action'>"); 
-                newCity.text($("#cityName").val());
-                $("#listCities").prepend(newCity);
+            var apiKey = "2f83f2e43f057df57403be35ef7a51f5";
+            var cityvalidate = $("#cityName").val();
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+cityvalidate+"&cnt=6&appid="+apiKey; // Constructing a queryURL using the city name and api key
+            $.ajax({ // Performing an AJAX request with the queryURL
+              url: queryURL,
+              method: "GET"
+            })
+            .done(function(){ // To validate if the request is successful 
+                if (jQuery.inArray($("#cityName").val(), cities) === -1){
+                    cities.push($("#cityName").val());
+                    console.log(cities);
+                    localStorage.setItem("Cities",JSON.stringify(cities));  // Grabbing and storing the name city from the button
+                    var newCity = $("<button type='button' class='list-group-item list-group-item-action'>"); 
+                    newCity.text($("#cityName").val());
+                    $("#listCities").prepend(newCity);
+                    clearForecast();
+                    apiCallOut($("#cityName").val());
+                } else {
+                    clearForecast();
+                    apiCallOut($("#cityName").val()); 
+                }
+                $("#listCities").empty();
+                initStore();
+                $("#listCities button").on("click", function(){  // Event listener for button, for when the button is clicked
+                console.log($(this).text());
                 clearForecast();
-                apiCallOut($("#cityName").val());
-            } else {
-                clearForecast();
-                apiCallOut($("#cityName").val()); 
-            }
+                apiCallOut($(this).text());           
+                });            
+            })
+            .fail(function(){ // To validate if the request is not successful 
+                alert("City was not found");
+                $("#cityName").val("");
+            })
         }
-        $("#listCities").empty();
-        initStore();
-        $("#listCities button").on("click", function(){  // Event listener for button, for when the button is clicked
-            console.log($(this).text());
-            clearForecast();
-            apiCallOut($(this).text());           
-        });            
-        });
-    
+    });    
 });
 
 function initStore() { // Getting all data from the local store to initialize the list of cities 
